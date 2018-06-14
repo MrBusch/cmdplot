@@ -14,10 +14,18 @@ class CmdPlot::Plot
         # Scale x axis to the desired console resolution
         x_max = x.compact.max
         x_min = x.compact.min
+        if x_min == x_max
+            x_min = x_min - 0.1
+            x_max = x_max + 0.1
+        end
         x = x.map { |v| v.nil? ? nil : ((v - x_min) / (x_max - x_min).to_f * (@width - 1)).round }
         # Scale y axis to the desired console resolution
         y_max = y.compact.max
         y_min = y.compact.min
+        if y_min == y_max
+            y_min = y_min - 0.1
+            y_max = y_max + 0.1
+        end
         y = y.map { |v| v.nil? ? nil : ((v - y_min) / (y_max - y_min).to_f * (@height - 1)).round }
 
         # Full plot-picture starts out empty
