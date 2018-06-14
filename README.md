@@ -9,4 +9,4 @@ A command line plotting library for ruby
 y = x.map { |v| Math.sin(v) }
 CmdPlot::Plot.new.plot(x, y)
 ```
-![Line plot](https://github.com/MrBusch/cmdplot/tree/master/examples/lineplot.png "Line plot")
+![Line plot](https://raw.githubusercontent.com/MrBusch/cmdplot/master/examples/lineplot.png "Line plot")
