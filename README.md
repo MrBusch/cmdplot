@@ -166,7 +166,7 @@ bundle exec rake        # tests and RuboCop
 ## Releasing
 
 1. Bump `CmdPlot::VERSION` in `lib/cmd_plot/version.rb` and add a section to `CHANGELOG.md`.
-2. Merge to `master`, then tag and push: `git tag v0.1.0 && git push origin v0.1.0`.
+2. Merge to `main`, then tag and push: `git tag v0.1.0 && git push origin v0.1.0`.
 
 The Release workflow checks that the tag matches the version, runs the tests and publishes
 the gem to RubyGems.org through [trusted publishing](https://guides.rubygems.org/trusted-publishing/).
