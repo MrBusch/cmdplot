@@ -1,0 +1,41 @@
+AllCops:
+    TargetRubyVersion: 2.7
+    NewCops: enable
+    SuggestExtensions: false
+    Exclude:
+        - vendor/**/*
+        - pkg/**/*
+
+Layout/IndentationWidth:
+    Width: 4
+
+Layout/LineLength:
+    Max: 120
+
+Layout/FirstHashElementIndentation:
+    EnforcedStyle: consistent
+
+Layout/HeredocIndentation:
+    Enabled: false
+
+Layout/TrailingWhitespace:
+    AllowInHeredoc: true
+
+# Multi-line blocks use braces throughout, to keep one style.
+Style/BlockDelimiters:
+    Enabled: false
+
+Style/Documentation:
+    Enabled: false
+
+Style/RedundantReturn:
+    Enabled: false
+
+Metrics:
+    Enabled: false
+
+Naming/MethodParameterName:
+    AllowedNames: [x, y, n, r, c, v, x0, y0, x1, y1, io]
+
+Gemspec/DevelopmentDependencies:
+    EnforcedStyle: Gemfile

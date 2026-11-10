@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'bundler/gem_tasks'
 require 'rake/testtask'
 
 Rake::TestTask.new(:test) do |t|
@@ -8,4 +9,10 @@ Rake::TestTask.new(:test) do |t|
     t.warning = true
 end
 
-task default: :test
+begin
+    require 'rubocop/rake_task'
+    RuboCop::RakeTask.new
+    task default: %i[test rubocop]
+rescue LoadError
+    task default: :test
+end

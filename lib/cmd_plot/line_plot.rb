@@ -18,9 +18,7 @@ class CmdPlot
 
             series = plot_series(data, data2)
             start_date = date_start(series)
-            unless start_date.nil?
-                series = series.map { |s| s.transform_keys { |d| (d - start_date).to_f } }
-            end
+            series = series.map { |s| s.transform_keys { |d| (d - start_date).to_f } } unless start_date.nil?
 
             ys = series.flat_map(&:values).compact
             raise ArgumentError, 'nothing to plot: every y value is nil' if ys.empty?
@@ -52,16 +50,16 @@ class CmdPlot
             return [data.zip(data2).to_h] unless data2.nil?
             return [data] if data.is_a?(Hash)
             raise ArgumentError, 'expected an array or a hash to plot' unless data.is_a?(Array)
-            return [data.each_with_index.map { |y, i| [i, y] }.to_h] if data.all? { |d| d.nil? || d.is_a?(Numeric) }
-            return data if data.all? { |d| d.is_a?(Hash) }
+            return [data.each_with_index.to_h { |y, i| [i, y] }] if data.all? { |d| d.nil? || d.is_a?(Numeric) }
+            return data if data.all?(Hash)
 
             raise ArgumentError, 'expected numbers, a hash, or an array of hashes to plot'
         end
 
         def date_start(series)
             keys = series.flat_map(&:keys).compact
-            return nil unless keys.any? { |k| k.is_a?(Date) }
-            raise ArgumentError, 'cannot mix Date and numeric x values' unless keys.all? { |k| k.is_a?(Date) }
+            return nil unless keys.any?(Date)
+            raise ArgumentError, 'cannot mix Date and numeric x values' unless keys.all?(Date)
 
             keys.min
         end
@@ -82,7 +80,7 @@ class CmdPlot
             ys = series.values.map { |v| v.nil? ? nil : ((v - y_min) / (y_max - y_min).to_f * (rows - 1)).round }
             pairs = xs.zip(ys)
             points = if pairs.length == 1
-                         pairs.reject { |_, y| y.nil? }
+                         pairs.reject { |pair| pair[1].nil? }
                      else
                          pairs.each_cons(2).flat_map { |(x0, y0), (x1, y1)| Braille.line_points(x0, y0, x1, y1) }
                      end

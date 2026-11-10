@@ -1,0 +1,28 @@
+name: Release
+
+# Push a tag like v0.1.0 to publish that version to RubyGems.org. Uses trusted
+# publishing, so no API key is stored in the repo; the gem needs a trusted publisher
+# for this repository and workflow configured on rubygems.org first.
+on:
+  push:
+    tags: ['v*']
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4'
+          bundler-cache: true
+      - name: Check the tag matches the version
+        run: |
+          version=$(ruby -Ilib -rcmd_plot/version -e 'print CmdPlot::VERSION')
+          test "v$version" = "$GITHUB_REF_NAME" || { echo "Tag $GITHUB_REF_NAME does not match version $version"; exit 1; }
+      - run: bundle exec rake test
+      - uses: rubygems/release-gem@v1

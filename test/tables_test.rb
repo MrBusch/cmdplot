@@ -16,7 +16,7 @@ class TablesTest < Minitest::Test
               1 │ alpha
              22 │      
         TABLE
-        assert_equal expected, render { |p| p.table(ROWS) }
+        assert_equal(expected, render { |p| p.table(ROWS) })
     end
 
     def test_table_fields_and_shorten
@@ -26,7 +26,7 @@ class TablesTest < Minitest::Test
              alp │  1
                  │ 22
         TABLE
-        assert_equal expected, render { |p| p.table(ROWS, %w[name id], 3) }
+        assert_equal(expected, render { |p| p.table(ROWS, %w[name id], 3) })
     end
 
     def test_table_accepts_records
@@ -35,9 +35,9 @@ class TablesTest < Minitest::Test
     end
 
     def test_empty_data_prints_nothing
-        assert_equal '', render { |p| p.table([]) }
-        assert_equal '', render { |p| p.expanded_table([]) }
-        assert_equal '', render { |p| p.csv([]) }
+        assert_equal('', render { |p| p.table([]) })
+        assert_equal('', render { |p| p.expanded_table([]) })
+        assert_equal('', render { |p| p.csv([]) })
     end
 
     def test_expanded_table
@@ -49,7 +49,7 @@ class TablesTest < Minitest::Test
             id            │ 22
             name          │ 
         TABLE
-        assert_equal expected, render { |p| p.expanded_table(ROWS) }
+        assert_equal(expected, render { |p| p.expanded_table(ROWS) })
     end
 
     def test_expanded_table_long_field_names
@@ -58,7 +58,7 @@ class TablesTest < Minitest::Test
     end
 
     def test_csv
-        assert_equal "id, name\n1, alpha\n22, \n", render { |p| p.csv(ROWS) }
+        assert_equal("id, name\n1, alpha\n22, \n", render { |p| p.csv(ROWS) })
     end
 
     def test_csv_quotes_special_values
