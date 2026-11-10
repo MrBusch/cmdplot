@@ -21,7 +21,7 @@ class CmdPlot
                 shorten.nil? ? width : [width, shorten].min
             }
             cut = ->(value) { shorten.nil? ? value.to_s : value.to_s[0, shorten] }
-            line = ->(values) { ' ' + values.zip(widths).map { |v, w| cut.call(v).rjust(w) }.join(' │ ') }
+            line = ->(values) { " #{values.zip(widths).map { |v, w| cut.call(v).rjust(w) }.join(' │ ')}" }
 
             buf = +''
             buf << line.call(fields) << "\n"
@@ -69,7 +69,7 @@ class CmdPlot
         def records(data)
             data.map { |row|
                 if row.respond_to?(:attributes)
-                    row.attributes.map { |k, v| [k.to_s, v.to_s] }.to_h
+                    row.attributes.to_h { |k, v| [k.to_s, v.to_s] }
                 else
                     row
                 end

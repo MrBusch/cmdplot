@@ -28,8 +28,8 @@ class LinePlotTest < Minitest::Test
     def test_x_and_y_arrays_match_hash
         x = [0, 1, 2, 3]
         y = [1, 3, 2, 5]
-        assert_equal render { |p| p.plot(x.zip(y).to_h) }, render { |p| p.plot(x, y) }
-        assert_equal render { |p| p.plot(y) }, render { |p| p.plot(x, y) }
+        assert_equal(render { |p| p.plot(x.zip(y).to_h) }, render { |p| p.plot(x, y) })
+        assert_equal(render { |p| p.plot(y) }, render { |p| p.plot(x, y) })
     end
 
     def test_returns_nil
@@ -54,7 +54,7 @@ class LinePlotTest < Minitest::Test
 
     def test_date_axis
         start = Date.new(2024, 1, 1)
-        text = render(60, 10) { |p| p.plot((0..30).map { |i| [start + i, i] }.to_h) }
+        text = render(60, 10) { |p| p.plot((0..30).to_h { |i| [start + i, i] }) }
         assert_includes text, '2024-01-01'
         assert_includes text, '2024-01-31'
     end

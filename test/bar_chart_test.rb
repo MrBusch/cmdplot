@@ -29,13 +29,13 @@ class BarChartTest < Minitest::Test
 
     def test_histogram
         text = render(30) { |p| p.histogram([1, 1, 2, 3, 3, 3, 4], 3) }
-        assert_equal ['1.5: 2', '2.5: 1', '3.5: 4'], text.lines.map { |l| l[0, 6] }
+        assert_equal(['1.5: 2', '2.5: 1', '3.5: 4'], text.lines.map { |l| l[0, 6] })
     end
 
     def test_histogram_with_limits
         text = render(30) { |p| p.histogram([-10, 1, 2, 7, 50], [0, 5, 10]) }
         # Values outside the limits land in the first and last bin.
-        assert_equal ['2.5: 3', '7.5: 2'], text.lines.map { |l| l[0, 6] }
+        assert_equal(['2.5: 3', '7.5: 2'], text.lines.map { |l| l[0, 6] })
     end
 
     def test_histogram_needs_values

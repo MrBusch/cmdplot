@@ -21,15 +21,16 @@ class CmdPlot
             buf = +"Pcolor with x_scale: #{x_scale.round(3)}, y_scale: #{y_scale.round(3)}, " \
                    "z_min: #{z_min.round(3)}, z_max: #{z_max.round(3)}\n"
 
-            Array.new(@height) { |row|
-                Array.new(@width) { |col|
+            @height.times { |row|
+                line = Array.new(@width) { |col|
                     val = cell_average(data, row, col, x_scale, y_scale)
                     next ' ' if val.nil?
 
                     shade = z_max == z_min ? 0 : ((val - z_min) / (z_max - z_min).to_f * (shades - 1)).round
                     colorize(FILL_SYMBOLS[shade / TEXT_COLORS.length], "3#{TEXT_COLORS[shade % TEXT_COLORS.length]}")
-                }.join
-            }.each { |line| buf << line << "\n" }
+                }
+                buf << line.join << "\n"
+            }
             out.print(buf)
             nil
         end
